@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.ItemMapper">
+	<select id="findByItems" resultType="com.example.domain.Items">
+		select * from items order by id;
+	</select>
+	
+	<!-- <select id="itemSearch">
+		select * from items
+		where 
+	</select> -->
+	
+	<select id="itemSort" resultType="com.example.domain.Items">
+		select * from items
+		<if test='sortValue == "1"'>
+			order by price_M DESC
+		</if>
+		<if test='sortValue == "2"'>
+			order by price_M
+		</if>
+		<if test='sortValue == "3"'>
+			order by name
+		</if>
+		<if test='sortValue == "4"'>
+			order by id DESC
+		</if>
+	</select>
+</mapper>
