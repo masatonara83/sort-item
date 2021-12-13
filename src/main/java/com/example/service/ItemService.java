@@ -23,4 +23,12 @@ public class ItemService {
 	public List<Items> sortItems(Integer sortValue){
 		return mapper.itemSort(Integer.toString(sortValue));
 	}
+	
+	public List<Items> searchItems(String[] keywords){
+		List<Items> itemList = mapper.itemSearch(keywords);
+		if(itemList.size() == 0) {
+			return findByItems();
+		}
+		return itemList;
+	}
 }

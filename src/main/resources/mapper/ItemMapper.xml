@@ -7,24 +7,47 @@
 		select * from items order by id;
 	</select>
 	
-	<!-- <select id="itemSearch">
+	<select id="itemSearch" resultType="com.example.domain.Items">
 		select * from items
 		where 
-	</select> -->
+		<foreach collection="keywords" item="keyword" open="(" close=")" separator="" index="i">
+			<choose>
+				<when test="i == 0">
+					(name like '%${keyword}%')
+				</when>
+				<otherwise>
+					and (name like '%${keyword}%')
+				</otherwise>
+			</choose>
+		</foreach>
+		or
+		<foreach collection="keywords" item="keyword" open="(" close=")" separator="" index="i">
+			<choose>
+				<when test="i == 0">
+					(description like '%${keyword}%')
+				</when>
+				<otherwise>
+					and (description like '%${keyword}%')
+				</otherwise>
+			</choose>
+		</foreach>
+	</select>
 	
 	<select id="itemSort" resultType="com.example.domain.Items">
-		select * from items
-		<if test='sortValue == "1"'>
-			order by price_M DESC
-		</if>
-		<if test='sortValue == "2"'>
-			order by price_M
-		</if>
-		<if test='sortValue == "3"'>
-			order by name
-		</if>
-		<if test='sortValue == "4"'>
-			order by id DESC
-		</if>
+		select * from items 
+			<choose>
+			<when test='sortValue == "1"'>
+				order by price_M DESC
+			</when>
+			<when test='sortValue == "2"'>
+				order by price_M
+			</when>
+			<when test='sortValue == "3"'>
+				order by name
+			</when>
+			<otherwise>
+				order by id DESC
+			</otherwise>
+			</choose>
 	</select>
 </mapper>
